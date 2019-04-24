@@ -12,14 +12,14 @@ export class AppComponent {
   fiscalCode: string;
   submitted: boolean = false;
   success: boolean = false;
+  errorMessage: string = "";
   title: string = 'FISCAL CODE CALCULATOR';
   fields = {
     surname: ['', Validators.required],
     name: ['', Validators.required],
     date: ['', Validators.required],
     sex: ['', Validators.required],
-    birthPlace: ['', Validators.required],
-    province: ['', Validators.required]
+    birthPlace: ['', Validators.required]
   };
 
   constructor(private formBuilder: FormBuilder, private fiscalCodeCalculator: CalculateFiscalCodeService) { }
@@ -35,8 +35,15 @@ export class AppComponent {
       console.log("INVALID");
       return;
     }
-    this.success = true;
-    this.fiscalCode = this.fiscalCodeCalculator.calculate(this.fiscalCodeForm.controls.surname.value, this.fiscalCodeForm.controls.name.value, this.fiscalCodeForm.controls.date.value, this.fiscalCodeForm.controls.sex.value, this.fiscalCodeForm.controls.birthPlace.value, this.fiscalCodeForm.controls.province.value);
+
+    if (this.fiscalCodeCalculator.validCity(this.fiscalCodeForm.controls.birthPlace.value)) {
+      this.fiscalCode = this.fiscalCodeCalculator.calculate(this.fiscalCodeForm.controls.surname.value, this.fiscalCodeForm.controls.name.value, this.fiscalCodeForm.controls.date.value, this.fiscalCodeForm.controls.sex.value, this.fiscalCodeForm.controls.birthPlace.value);
+      this.success = true;
+    } else {
+      this.success = false;
+      this.errorMessage = "Sorry, birth place not found";
+    }
+
     console.log("VALID");
   }
 }

@@ -7,7 +7,7 @@ export class CalculateFiscalCodeService {
 
   constructor() { }
 
-  calculate(surname: string, name: string, date: Date, sex: string, birthPlace: string, province: string) {
+  calculate(surname: string, name: string, date: Date, sex: string, birthPlace: string) {
     let fiscalCode: string = "";
 
     fiscalCode += this.processSurname(surname);
@@ -33,9 +33,9 @@ export class CalculateFiscalCodeService {
 
     for (let i = 1; i <= text.length; i++) {
       if (i % 2 == 0) {
-        code += this.evenMap[text[i-1]];
+        code += this.evenMap[text[i - 1]];
       } else {
-        code += this.oddMap[text[i-1]];
+        code += this.oddMap[text[i - 1]];
       }
     }
 
@@ -141,6 +141,10 @@ export class CalculateFiscalCodeService {
     return vowels;
   }
 
+
+  validCity(birthPlace: String) {
+    return this.cityMap[birthPlace.toUpperCase()] !== undefined;
+  }
 
   monthMap = {
     0: 'A',

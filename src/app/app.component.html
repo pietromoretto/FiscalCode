@@ -52,22 +52,11 @@
 
   <br>
 
-  <mat-form-field>
-    <input matInput placeholder="Province" formControlName="province" maxlength="2" capitalize>
-    <mat-error *ngIf="submitted && fiscalCodeForm.controls.province.errors">
-      Province is required
-    </mat-error>
-  </mat-form-field>
-
-  <br>
-
   <button mat-raised-button>Submit</button>
 
 </form>
 
-<div *ngIf="submitted && success">
-
-
-  <p>FISCAL CODE: {{fiscalCode}}</p>
-
+<div *ngIf="submitted">
+  <p *ngIf="success">FISCAL CODE: {{fiscalCode}}</p>
+  <p *ngIf="!success">{{errorMessage}}</p>
 </div>
